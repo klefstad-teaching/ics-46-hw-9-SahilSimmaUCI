@@ -3,14 +3,12 @@
 vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& previous) {
     int n = G.numVertices;
     vector<int> distance(n, INF);
-    previous.assign(n, -1);        // Initialize 'previous' array
+    previous.assign(n, -1);
     vector<bool> visited(n, false);
 
-    // Min-heap storing pairs of (distance, vertex)
     using Pair = pair<int,int>;
     priority_queue<Pair, vector<Pair>, greater<Pair>> pq;
 
-    // Distance to source is 0
     distance[source] = 0;
     pq.push({0, source});
 
@@ -20,8 +18,6 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
 
         if (visited[u]) continue;
         visited[u] = true;
-
-        // Relax all edges out of u
         for (auto& edge : G[u]) {
             int v = edge.dst;
             int w = edge.weight;
@@ -32,7 +28,7 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
             }
         }
     }
-    return distance;  // Return the distance array
+    return distance;
 }
 
 vector<int> extract_shortest_path(const vector<int>& distances, const vector<int>& previous,  int destination) {
