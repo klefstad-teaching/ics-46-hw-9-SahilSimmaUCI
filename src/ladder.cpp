@@ -81,7 +81,7 @@ void load_words(set<string> & word_list, const string& file_name){
 void print_word_ladder(const vector<string>& ladder){
     int size = ladder.size();
     if (size == 0) {
-        error("Empty","Still Empty","this shi empty gng");
+        cout << "No word ladder found.\n";
         return;
     }
     cout << "Word ladder found: ";
