@@ -1,6 +1,7 @@
 #include "ladder.h"
+using namespace std;
 
-void error(string word1, string word2, string msg) {std::cout << "Key Error 1: " << word1 << "Key Error 2: " << word2 << "\nError message: " << msg << std::endl;}
+void error(string word1, string word2, string msg) {cout << "Key Error 1: " << word1 << "Key Error 2: " << word2 << "\nError message: " << msg << endl;}
 
 bool edit_distance_within(const std::string& str1, const std::string& str2, int d){
     int strlen1 = str1.length();
@@ -37,7 +38,38 @@ bool edit_distance_within(const std::string& str1, const std::string& str2, int 
 
 bool is_adjacent(const string& word1, const string& word2) {return edit_distance_within(word1, word2, 1);}
 
-vector<string> generate_word_ladder(const string& begin_word, const string& end_word, const set<string>& word_list);
+vector<string> generate_word_ladder(const string& begin_word, const string& end_word, const set<string>& word_list){
+    if (begin_word == end_word) {
+        error(begin_word, end_word, "same shi");
+        vector<string> ret;
+        return ret;
+    }
+    queue<vector<string>> ladder_queue;
+    ladder_queue.push({begin_word});
+    set<string> visited;
+    visited.insert(begin_word);
+    while (!ladder_queue.empty()) {
+        vector<string> ladder = ladder_queue.front();
+        ladder_queue.pop();
+
+        string last_word = ladder.back();
+        for (string word : word_list) {
+            if (is_adjacent(last_word, word))
+                if (visited.find(word) == visited.end()) {
+                    visited.insert(word);
+                    vector<string> new_ladder = ladder;
+                    new_ladder.push_back(word);
+                    if (word == end_word)
+                        return new_ladder;
+                    ladder_queue.push(new_ladder);
+                }
+        }
+    }
+    error(begin_word, end_word, "I have notting.");
+    vector<string> ret;
+    return ret;
+}
+
 void load_words(set<string> & word_list, const string& file_name);
 void print_word_ladder(const vector<string>& ladder);
 
