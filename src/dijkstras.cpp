@@ -32,11 +32,12 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
 }
 
 vector<int> extract_shortest_path(const vector<int>& distances, const vector<int>& previous,  int destination) {
+    vector<int> ret;
     for (int cur = destination; cur != -1; cur = previous[cur]) {
-        distances.push_back(cur);
+        ret.push_back(cur);
     }
-    reverse(distances.begin(), distances.end());
-    return distances;
+    reverse(ret.begin(), ret.end());
+    return ret;
 }
 
 void print_path(const vector<int>& v, int total) {
