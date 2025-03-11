@@ -2,7 +2,6 @@
 using namespace std;
 
 void error(string word1, string word2, string msg) {cout << "Key Error 1: " << word1 << "Key Error 2: " << word2 << "\nError message: " << msg << endl;}
-
 bool edit_distance_within(const std::string& str1, const std::string& str2, int d){
     int strlen1 = str1.length();
     int strlen2 = str2.length();
@@ -35,9 +34,7 @@ bool edit_distance_within(const std::string& str1, const std::string& str2, int 
     diff += (strlen2 - j);
     return diff <= d;
 }
-
 bool is_adjacent(const string& word1, const string& word2) {return edit_distance_within(word1, word2, 1);}
-
 vector<string> generate_word_ladder(const string& begin_word, const string& end_word, const set<string>& word_list){
     if (begin_word == end_word) {
         error(begin_word, end_word, "same shi");
@@ -69,8 +66,18 @@ vector<string> generate_word_ladder(const string& begin_word, const string& end_
     vector<string> ret;
     return ret;
 }
+void load_words(set<string> & word_list, const string& file_name){
+    ifstream file(file_name);
+    string word;
+    while (file >> word) {
+        for (char &c : word) {
+            c = std::tolower(c);
+        }
+        word_list.insert(word);
+    }
+    file.close();
+}
 
-void load_words(set<string> & word_list, const string& file_name);
 void print_word_ladder(const vector<string>& ladder);
 
 #define my_assert(e) {cout << #e << ((e) ? " passed": " failed") << endl;}
